@@ -22,7 +22,7 @@ module.exports = class StylusCompiler
           console.error "You need to have convert (ImageMagick) on your system for spriting"
     null
 
-  compile: (data, path, callback) =>        
+  compile: (data, path, callback) =>
     @getCompiler data, (compiler) =>
       compiler = compiler
         .set('compress', no)
@@ -49,8 +49,8 @@ module.exports = class StylusCompiler
 
       sprite.stylus options, (err, helper) =>
         callback(stylus(data).define('sprite', helper.fn))
-    else 
-      callback(stylus(data))    
+    else
+      callback(stylus(data))
 
   getDependencies: (data, path, callback) =>
     parent = sysPath.dirname path
@@ -74,5 +74,19 @@ module.exports = class StylusCompiler
           sysPath.join @config.paths.root, path[1..]
         else
           sysPath.join parent, path
-    process.nextTick =>
-      callback null, dependencies
+
+    # Recursive dependencies
+    childs = []
+    dependencies.forEach (path) =>
+        fileData = fs.readFileSync path, 'utf8'
+        if fileData
+          deps = @getDependencies fileData, path
+          childs = childs.concat deps if deps.length
+
+    dependencies = dependencies.concat childs if childs.length
+
+    if callback
+      process.nextTick =>
+        callback null, dependencies
+    else
+      dependencies
