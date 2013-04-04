@@ -84,11 +84,24 @@ describe('Plugin', function() {
       });
     });
 
-    it('should output recursive deps', function(done){
+    it('should output recursive deps when ignored files', function(done){
+      var content = "@import '_recursive_test'\n";
+      var expected = [
+        sysPath.join(supportFolder, '_recursive_test.styl'),
+        sysPath.join(supportFolder, 'path_test.styl')
+      ];
+
+      plugin.getDependencies(content, supportFolder + '/test.styl', function(error, dependencies) {
+        expect(error).not.to.be.ok;
+        expect(dependencies).to.eql(expected);
+        done();
+      });
+    });
+
+    it('should not output recursive deps when not ignored files', function(done){
       var content = "@import 'recursive_test'\n";
       var expected = [
-        sysPath.join(supportFolder, 'recursive_test.styl'),
-        sysPath.join(supportFolder, 'path_test.styl')
+        sysPath.join(supportFolder, 'recursive_test.styl')
       ];
 
       plugin.getDependencies(content, supportFolder + '/test.styl', function(error, dependencies) {

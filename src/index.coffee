@@ -75,10 +75,10 @@ module.exports = class StylusCompiler
         else
           sysPath.join parent, path
 
-    # Recursive dependencies
+    # Recursive dependencies only on ignored files e.g.'_file.styl'
     childs = []
     dependencies.forEach (path) =>
-        if fs.existsSync path
+        if (sysPath.basename path).charAt(0) is '_' && fs.existsSync path
           fileData = fs.readFileSync path, 'utf8'
           deps = @getDependencies fileData, path
           childs = childs.concat deps if deps.length
