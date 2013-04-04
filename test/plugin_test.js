@@ -1,5 +1,6 @@
 var fs = require('fs');
 var sysPath = require('path');
+var supportFolder = sysPath.join(sysPath.basename(__dirname), 'support');
 var supportPath = sysPath.resolve(__dirname, 'support');
 
 describe('Plugin', function() {
@@ -83,15 +84,14 @@ describe('Plugin', function() {
       });
     });
 
-
     it('should output recursive deps', function(done){
       var content = "@import 'recursive_test'\n";
       var expected = [
-        sysPath.join(supportPath, 'recursive_test.styl'),
-        sysPath.join(supportPath, 'path_test.styl')
+        sysPath.join(supportFolder, 'recursive_test.styl'),
+        sysPath.join(supportFolder, 'path_test.styl')
       ];
 
-      plugin.getDependencies(content, fileName, function(error, dependencies) {
+      plugin.getDependencies(content, supportFolder + '/test.styl', function(error, dependencies) {
         expect(error).not.to.be.ok;
         expect(dependencies).to.eql(expected);
         done();

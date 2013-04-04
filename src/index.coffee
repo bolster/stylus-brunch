@@ -78,8 +78,8 @@ module.exports = class StylusCompiler
     # Recursive dependencies
     childs = []
     dependencies.forEach (path) =>
-        fileData = fs.readFileSync path, 'utf8'
-        if fileData
+        if fs.existsSync path
+          fileData = fs.readFileSync path, 'utf8'
           deps = @getDependencies fileData, path
           childs = childs.concat deps if deps.length
 
