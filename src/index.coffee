@@ -75,14 +75,8 @@ module.exports = class StylusCompiler
         else
           sysPath.join parent, path
 
-    # Recursive dependencies only on ignored files e.g.'_file.styl'
-    childs = []
-    dependencies.forEach (path) =>
-        if (sysPath.basename path).charAt(0) is '_' && fs.existsSync path
-          fileData = fs.readFileSync path, 'utf8'
-          deps = @getDependencies fileData, path
-          childs = childs.concat deps if deps.length
-
+    # Recursive dependencies
+    childs = @getSubDependencies dependencies
     dependencies = dependencies.concat childs if childs.length
 
     if callback
@@ -90,3 +84,13 @@ module.exports = class StylusCompiler
         callback null, dependencies
     else
       dependencies
+
+  getSubDependencies: (dependencies) =>
+    childs = []
+    dependencies.forEach (path) =>
+      # Only needed on ignored files e.g.'_file.styl'
+      if (sysPath.basename path).charAt(0) is '_' && fs.existsSync path
+        fileData = fs.readFileSync path, 'utf8'
+        deps = @getDependencies fileData, path
+        childs = childs.concat deps if deps.length
+    childs
