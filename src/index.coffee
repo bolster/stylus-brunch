@@ -89,7 +89,7 @@ module.exports = class StylusCompiler
     childs = []
     dependencies.forEach (path) =>
       # Only needed on ignored files e.g.'_file.styl'
-      if (sysPath.basename path).charAt(0) is '_' && fs.existsSync path
+      if @config.conventions.ignored(path) && fs.existsSync path
         fileData = fs.readFileSync path, 'utf8'
         deps = @getDependencies fileData, path
         childs = childs.concat deps if deps.length
