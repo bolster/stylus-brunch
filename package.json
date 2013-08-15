@@ -1,6 +1,6 @@
 {
   "name": "stylus-brunch",
-  "version": "1.5.1",
+  "version": "1.5.2",
   "description": "Adds Stylus support to brunch.",
   "author": "Paul Miller (http://paulmillr.com/)",
   "homepage": "https://github.com/brunch/stylus-brunch",
@@ -15,7 +15,7 @@
     "test": "node setup.js test"
   },
   "dependencies": {
-    "stylus": "~0.32.1",
+    "stylus": "~0.36.1",
     "nib": "~0.9.0",
     "node-sprite": "0.1.1"
   },

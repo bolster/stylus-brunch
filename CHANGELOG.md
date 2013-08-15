@@ -1,3 +1,6 @@
+# stylus-brunch 1.5.2 (19 March 2013)
+* Updated stylus to 0.36
+
 # stylus-brunch 1.5.1 (19 March 2013)
 * Added node 0.10 support, removed coffee-script dependency.
 
