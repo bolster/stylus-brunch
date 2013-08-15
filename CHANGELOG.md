@@ -1,5 +1,15 @@
+<<<<<<< HEAD
 # stylus-brunch 1.5.2 (19 March 2013)
 * Updated stylus to 0.36
+=======
+# stylus-brunch 1.6.1 (5 May 2013)
+* Fixed compilation issues.
+
+# stylus-brunch 1.6.0 (18 April 2013)
+* Moved config from `config.stylus` to `config.plugins.stylus`.
+* Filename is now passed to compiler.
+* Added `linenos` property support.
+>>>>>>> 29c4aff4ab33dbd74770c1a544f5422d8adba658
 
 # stylus-brunch 1.5.1 (19 March 2013)
 * Added node 0.10 support, removed coffee-script dependency.
